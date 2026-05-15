@@ -1,0 +1,72 @@
+@import "tailwindcss/theme.css" layer(theme);
+@import "tailwindcss/preflight.css" layer(base);
+@import "tailwindcss/utilities.css";
+
+@layer theme {
+  @theme {
+    --color-primary: #6C4EF5;
+    --color-primary-deep: #5B3BF6;
+    --color-secondary: #4D8BFF;
+    --color-tertiary: #21C16B;
+
+    --color-success: #21C16B;
+    --color-warning: #FFC800;
+    --color-streak: #FF8A00;
+    --color-error: #FF4D4F;
+    --color-info: #4D8BFF;
+
+    --color-text-primary: #0D132B;
+    --color-text-secondary: #6B7280;
+    --color-border: #E5E7EB;
+    --color-surface: #F6F7FB;
+    --color-background: #FFFFFF;
+    
+    --font-poppins: 'Poppins-Regular';
+    --font-poppins-medium: 'Poppins-Medium';
+    --font-poppins-semibold: 'Poppins-SemiBold';
+    --font-poppins-bold: 'Poppins-Bold';
+  }
+}
+
+@layer utilities {
+  .text-h1 {
+    font-family: var(--font-poppins-bold);
+    font-size: 32px;
+    line-height: 38.4px;
+  }
+  .text-h2 {
+    font-family: var(--font-poppins-semibold);
+    font-size: 24px;
+    line-height: 31.2px;
+  }
+  .text-h3 {
+    font-family: var(--font-poppins-semibold);
+    font-size: 20px;
+    line-height: 26px;
+  }
+  .text-h4 {
+    font-family: var(--font-poppins-medium);
+    font-size: 16px;
+    line-height: 22.4px;
+  }
+  .text-body-large {
+    font-family: var(--font-poppins);
+    font-size: 16px;
+    line-height: 25.6px;
+  }
+  .text-body-medium {
+    font-family: var(--font-poppins);
+    font-size: 14px;
+    line-height: 22.4px;
+  }
+  .text-body-small {
+    font-family: var(--font-poppins);
+    font-size: 13px;
+    line-height: 20.8px;
+  }
+  .text-caption {
+    font-family: var(--font-poppins);
+    font-size: 11px;
+    line-height: 15.4px;
+  }
+}
