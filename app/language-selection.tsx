@@ -9,7 +9,6 @@ import React from "react";
 import {
   FlatList,
   Pressable,
-  useWindowDimensions,
   Text,
   TextInput,
   View,
@@ -22,7 +21,6 @@ const CARD_RADIUS = 24;
 
 export default function LanguageSelectionScreen() {
   const router = useRouter();
-  const { width } = useWindowDimensions();
   const { selectedLanguage, setSelectedLanguage } = useLanguageStore();
 
   const handleSelect = (language: Language) => {
