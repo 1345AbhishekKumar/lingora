@@ -6,6 +6,9 @@ import { Language } from '@/types/learning';
 interface LanguageState {
   selectedLanguage: Language | null;
   setSelectedLanguage: (language: Language) => void;
+  clearLanguage: () => void;
+  _hasHydrated: boolean;
+  setHasHydrated: (state: boolean) => void;
 }
 
 export const useLanguageStore = create<LanguageState>()(
@@ -13,10 +16,16 @@ export const useLanguageStore = create<LanguageState>()(
     (set) => ({
       selectedLanguage: null,
       setSelectedLanguage: (language) => set({ selectedLanguage: language }),
+      clearLanguage: () => set({ selectedLanguage: null }),
+      _hasHydrated: false,
+      setHasHydrated: (state) => set({ _hasHydrated: state }),
     }),
     {
       name: 'language-storage',
       storage: createJSONStorage(() => AsyncStorage),
+      onRehydrateStorage: () => (state) => {
+        state?.setHasHydrated(true);
+      },
     }
   )
 );
