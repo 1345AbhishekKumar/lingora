@@ -1,8 +1,9 @@
 // app/(tabs)/_layout.tsx
 
-import { Tabs } from "expo-router";
-import { View, TouchableOpacity, Text, Platform } from "react-native";
 import { Ionicons, MaterialCommunityIcons } from "@expo/vector-icons";
+import type { BottomTabBarProps } from "@react-navigation/bottom-tabs";
+import { Tabs } from "expo-router";
+import { Text, TouchableOpacity, View } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 
 export default function TabLayout() {
@@ -22,7 +23,7 @@ export default function TabLayout() {
   );
 }
 
-function CustomTabBar({ state, descriptors, navigation }: any) {
+function CustomTabBar({ state, descriptors, navigation }: BottomTabBarProps) {
   const insets = useSafeAreaInsets();
 
   const getIcon = (routeName: string, isFocused: boolean) => {
@@ -88,7 +89,7 @@ function CustomTabBar({ state, descriptors, navigation }: any) {
         elevation: 10,
       }}
     >
-      {state.routes.map((route: any, index: number) => {
+      {state.routes.map((route, index) => {
         const { options } = descriptors[route.key];
         const isFocused = state.index === index;
         const isCenter = index === 2;
