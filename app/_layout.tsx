@@ -2,10 +2,12 @@ import "../global.css";
 import { useFonts } from "expo-font";
 import { Stack } from "expo-router";
 import * as SplashScreen from "expo-splash-screen";
-import { useEffect } from "react";
+import { useCallback } from "react";
+import { View } from "react-native";
 import { StatusBar } from "expo-status-bar";
 import { ClerkProvider, ClerkLoaded } from "@clerk/expo";
 import { tokenCache } from "@clerk/expo/token-cache";
+import { GestureHandlerRootView } from "react-native-gesture-handler";
 
 const publishableKey = process.env.EXPO_PUBLIC_CLERK_PUBLISHABLE_KEY!;
 
@@ -24,9 +26,11 @@ export default function RootLayout() {
     "Poppins-Bold": require("../assets/assets/fonts/Poppins-Bold.ttf"),
   });
 
-  useEffect(() => {
+  const onLayoutRootView = useCallback(async () => {
     if (loaded || error) {
-      SplashScreen.hideAsync();
+      // Small delay to ensure layout calculation is finished across all layers
+      await new Promise(resolve => setTimeout(resolve, 50));
+      await SplashScreen.hideAsync();
     }
   }, [loaded, error]);
 
@@ -37,8 +41,12 @@ export default function RootLayout() {
   return (
     <ClerkProvider publishableKey={publishableKey} tokenCache={tokenCache}>
       <ClerkLoaded>
-        <Stack screenOptions={{ headerShown: false }} />
-        <StatusBar style="dark" />
+        <GestureHandlerRootView style={{ flex: 1 }}>
+          <View style={{ flex: 1 }} onLayout={onLayoutRootView}>
+            <Stack screenOptions={{ headerShown: false }} />
+            <StatusBar style="auto" />
+          </View>
+        </GestureHandlerRootView>
       </ClerkLoaded>
     </ClerkProvider>
   );

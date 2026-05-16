@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import { View, Text, Pressable, StyleSheet, Dimensions, ScrollView } from "react-native";
+import { View, Text, Pressable, StyleSheet, ScrollView } from "react-native";
 import { Image } from "expo-image";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { images } from "@/constants/images";
@@ -14,8 +14,6 @@ import Animated, {
   useAnimatedStyle,
   useSharedValue,
 } from "react-native-reanimated";
-
-const { width } = Dimensions.get("window");
 
 export default function OnboardingScreen() {
   const router = useRouter();
@@ -53,7 +51,7 @@ export default function OnboardingScreen() {
       -1,
       true
     );
-  }, []);
+  }, [mascotTranslateY, bubble1TranslateY, bubble2TranslateY, bubble3TranslateY]);
 
   const mascotStyle = useAnimatedStyle(() => ({
     transform: [{ translateY: mascotTranslateY.value }],
@@ -70,7 +68,10 @@ export default function OnboardingScreen() {
 
   return (
     <SafeAreaView style={{ flex: 1, backgroundColor: "#FFFFFF" }}>
-      <ScrollView contentContainerStyle={{ flexGrow: 1, width: "100%", maxWidth: 480, alignSelf: "center", paddingHorizontal: 24, paddingTop: 16, paddingBottom: 24 }}>
+      <ScrollView 
+        contentInsetAdjustmentBehavior="automatic"
+        contentContainerStyle={{ flexGrow: 1, width: "100%", maxWidth: 500, alignSelf: "center", paddingHorizontal: 24, paddingBottom: 24 }}
+      >
         
         {/* Logo Header */}
         <Animated.View entering={FadeIn.delay(100).duration(600)} style={{ flexDirection: "row", alignItems: "center", justifyContent: "center", marginBottom: 32 }}>

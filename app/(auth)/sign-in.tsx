@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { View, Text, TextInput, Pressable, StyleSheet, ScrollView, Alert, Platform } from "react-native";
+import { View, Text, TextInput, Pressable, StyleSheet, ScrollView, Alert, Platform, KeyboardAvoidingView } from "react-native";
 import { Image } from "expo-image";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { images } from "@/constants/images";
@@ -141,106 +141,114 @@ export default function SignInScreen() {
 
   return (
     <SafeAreaView style={{ flex: 1, backgroundColor: "#FFFFFF" }}>
-      <ScrollView contentContainerStyle={{ flexGrow: 1, paddingHorizontal: 24, paddingBottom: 24 }}>
-        
-        {/* Top Navigation Zone */}
-        <View style={styles.topNav}>
-          <Pressable onPress={() => router.back()} style={styles.backButton}>
-            <Feather name="arrow-left" size={24} color="#0A1245" />
-          </Pressable>
-        </View>
+      <KeyboardAvoidingView 
+        behavior={Platform.OS === "ios" ? "padding" : "height"}
+        style={{ flex: 1 }}
+      >
+        <ScrollView 
+          contentInsetAdjustmentBehavior="automatic"
+          contentContainerStyle={{ flexGrow: 1, paddingHorizontal: 24, paddingBottom: 24 }}
+        >
+          
+          {/* Top Navigation Zone */}
+          <View style={styles.topNav}>
+            <Pressable onPress={() => router.back()} style={styles.backButton}>
+              <Feather name="arrow-left" size={24} color="#0A1245" />
+            </Pressable>
+          </View>
 
-        {/* Hero Zone */}
-        <View style={styles.heroZone}>
-          <Text style={styles.heading}>Welcome back</Text>
-          <Text style={styles.subheading}>Continue your language journey ✨</Text>
-        </View>
+          {/* Hero Zone */}
+          <View style={styles.heroZone}>
+            <Text style={styles.heading}>Welcome back</Text>
+            <Text style={styles.subheading}>Continue your language journey ✨</Text>
+          </View>
 
-        {/* Mascot Zone */}
-        <View style={styles.mascotZone}>
-          <Image
-            source={images.mascotAuth || images.mascotWelcome}
-            style={styles.mascotImage}
-            contentFit="contain"
-          />
-        </View>
-
-        {/* Form Zone */}
-        <View style={styles.formZone}>
-          <View style={styles.inputContainer}>
-            <Text style={styles.inputLabel}>Email</Text>
-            <TextInput
-              style={styles.input}
-              placeholder="Enter your email"
-              placeholderTextColor="#B0B4C9"
-              value={email}
-              onChangeText={setEmail}
-              keyboardType="email-address"
-              autoCapitalize="none"
-              autoCorrect={false}
+          {/* Mascot Zone */}
+          <View style={styles.mascotZone}>
+            <Image
+              source={images.mascotAuth || images.mascotWelcome}
+              style={styles.mascotImage}
+              contentFit="contain"
             />
           </View>
-        </View>
 
-        {/* CTA Zone */}
-        <View style={styles.ctaZone}>
-          <Pressable
-            style={({ pressed }) => [
-              styles.primaryButton,
-              isSubmitting && styles.primaryButtonDisabled,
-              pressed && { transform: [{ scale: 0.98 }], opacity: 0.95 }
-            ]}
-            onPress={handleSignIn}
-            disabled={isSubmitting}
-          >
-            <Text style={styles.primaryButtonText}>
-              {isSubmitting ? "Please wait..." : "Sign In"}
-            </Text>
-          </Pressable>
-        </View>
-
-        {/* Social Login Zone */}
-        <View style={styles.socialZone}>
-          <View style={styles.dividerContainer}>
-            <View style={styles.dividerLine} />
-            <Text style={styles.dividerText}>or continue with</Text>
-            <View style={styles.dividerLine} />
+          {/* Form Zone */}
+          <View style={styles.formZone}>
+            <View style={styles.inputContainer}>
+              <Text style={styles.inputLabel}>Email</Text>
+              <TextInput
+                style={styles.input}
+                placeholder="Enter your email"
+                placeholderTextColor="#B0B4C9"
+                value={email}
+                onChangeText={setEmail}
+                keyboardType="email-address"
+                autoCapitalize="none"
+                autoCorrect={false}
+              />
+            </View>
           </View>
 
-          <View style={styles.socialButtonsContainer}>
+          {/* CTA Zone */}
+          <View style={styles.ctaZone}>
             <Pressable
-              style={styles.socialButton}
-              onPress={() => handleSocialAuth("oauth_google", "Google")}
+              style={({ pressed }) => [
+                styles.primaryButton,
+                isSubmitting && styles.primaryButtonDisabled,
+                pressed && { transform: [{ scale: 0.98 }], opacity: 0.95 }
+              ]}
+              onPress={handleSignIn}
               disabled={isSubmitting}
             >
-              <FontAwesome5 name="google" size={24} color="#DB4437" />
-            </Pressable>
-            <Pressable
-              style={styles.socialButton}
-              onPress={() => handleSocialAuth("oauth_facebook", "Facebook")}
-              disabled={isSubmitting}
-            >
-              <FontAwesome5 name="facebook" size={24} color="#1877F2" />
-            </Pressable>
-            <Pressable
-              style={styles.socialButton}
-              onPress={() => handleSocialAuth("oauth_x", "X")}
-              disabled={isSubmitting}
-            >
-              <FontAwesome6 name="x-twitter" size={24} color="#000000" />
+              <Text style={styles.primaryButtonText}>
+                {isSubmitting ? "Please wait..." : "Sign In"}
+              </Text>
             </Pressable>
           </View>
-        </View>
 
-        {/* Footer Zone */}
-        <View style={styles.footerZone}>
-          <Text style={styles.footerText}>Don&apos;t have an account? </Text>
-          <Pressable onPress={() => router.replace("/(auth)/sign-up")}>
-            <Text style={styles.footerLink}>Sign up</Text>
-          </Pressable>
-        </View>
+          {/* Social Login Zone */}
+          <View style={styles.socialZone}>
+            <View style={styles.dividerContainer}>
+              <View style={styles.dividerLine} />
+              <Text style={styles.dividerText}>or continue with</Text>
+              <View style={styles.dividerLine} />
+            </View>
 
-      </ScrollView>
+            <View style={styles.socialButtonsContainer}>
+              <Pressable
+                style={styles.socialButton}
+                onPress={() => handleSocialAuth("oauth_google", "Google")}
+                disabled={isSubmitting}
+              >
+                <FontAwesome5 name="google" size={24} color="#DB4437" />
+              </Pressable>
+              <Pressable
+                style={styles.socialButton}
+                onPress={() => handleSocialAuth("oauth_facebook", "Facebook")}
+                disabled={isSubmitting}
+              >
+                <FontAwesome5 name="facebook" size={24} color="#1877F2" />
+              </Pressable>
+              <Pressable
+                style={styles.socialButton}
+                onPress={() => handleSocialAuth("oauth_x", "X")}
+                disabled={isSubmitting}
+              >
+                <FontAwesome6 name="x-twitter" size={24} color="#000000" />
+              </Pressable>
+            </View>
+          </View>
+
+          {/* Footer Zone */}
+          <View style={styles.footerZone}>
+            <Text style={styles.footerText}>Don&apos;t have an account? </Text>
+            <Pressable onPress={() => router.replace("/(auth)/sign-up")}>
+              <Text style={styles.footerLink}>Sign up</Text>
+            </Pressable>
+          </View>
+
+        </ScrollView>
+      </KeyboardAvoidingView>
 
       <VerificationModal 
         visible={modalVisible} 
